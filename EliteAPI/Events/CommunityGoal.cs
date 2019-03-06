@@ -1,89 +1,37 @@
-namespace EliteAPI.Events
+using System;
+using System.Collections.Generic;
+
+namespace EliteAPI
 {
-    using System;
-    using System.Collections.Generic;
 
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
-    public partial class CommunityGoalInfo
+    public class CommunityGoalInfo
     {
-        [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; internal set; }
+        public DateTime timestamp { get; }
 
-        [JsonProperty("event")]
-        public string Event { get; internal set; }
-
-        [JsonProperty("CurrentGoals")]
-        public List<CurrentGoal> CurrentGoals { get; internal set; }
+        public List<CurrentgoalInfo> CurrentGoals { get; }
     }
 
-    public partial class CurrentGoal
+    public class CurrentgoalInfo
     {
-        [JsonProperty("CGID")]
-        public long Cgid { get; internal set; }
-
-        [JsonProperty("Title")]
-        public string Title { get; internal set; }
-
-        [JsonProperty("SystemName")]
-        public string SystemName { get; internal set; }
-
-        [JsonProperty("MarketName")]
-        public string MarketName { get; internal set; }
-
-        [JsonProperty("Expiry")]
-        public DateTime Expiry { get; internal set; }
-
-        [JsonProperty("IsComplete")]
-        public bool IsComplete { get; internal set; }
-
-        [JsonProperty("CurrentTotal")]
-        public long CurrentTotal { get; internal set; }
-
-        [JsonProperty("PlayerContribution")]
-        public long PlayerContribution { get; internal set; }
-
-        [JsonProperty("NumContributors")]
-        public long NumContributors { get; internal set; }
-
-        [JsonProperty("TopRankSize")]
-        public long TopRankSize { get; internal set; }
-
-        [JsonProperty("PlayerInTopRank")]
-        public bool PlayerInTopRank { get; internal set; }
-
-        [JsonProperty("TierReached")]
-        public string TierReached { get; internal set; }
-
-        [JsonProperty("PlayerPercentileBand")]
-        public long PlayerPercentileBand { get; internal set; }
-
-        [JsonProperty("Bonus")]
-        public long Bonus { get; internal set; }
+        public int CGID { get; }
+        public string Title { get; }
+        public string SystemName { get; }
+        public string MarketName { get; }
+        public DateTime Expiry { get; }
+        public bool IsComplete { get; }
+        public long CurrentTotal { get; }
+        public int PlayerContribution { get; }
+        public int NumContributors { get; }
+        public ToptierInfo TopTier { get; }
+        public string TierReached { get; }
+        public int PlayerPercentileBand { get; }
+        public int Bonus { get; }
     }
 
-    public partial class CommunityGoalInfo
+    public class ToptierInfo
     {
-        public static CommunityGoalInfo Process(string json, EliteDangerousAPI api) => api.Events.InvokeCommunityGoalEvent(JsonConvert.DeserializeObject<CommunityGoalInfo>(json, EliteAPI.Events.CommunityGoalConverter.Settings));
+        public string Name { get; }
+        public string Bonus { get; }
     }
 
-    public static class CommunityGoalSerializer
-    {
-        public static string ToJson(this CommunityGoalInfo self) => JsonConvert.SerializeObject(self, EliteAPI.Events.CommunityGoalConverter.Settings);
-    }
-
-    internal static class CommunityGoalConverter
-    {
-        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
-        {
-            MissingMemberHandling = MissingMemberHandling.Ignore, MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters =
-            {
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
-    }
 }
