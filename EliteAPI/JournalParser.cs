@@ -21,23 +21,44 @@ namespace EliteAPI
 
         public void ProcessJournal(FileInfo logFile, bool doNotTrigger = true)
         {
-            //Create a stream from the log file.
-            FileStream fileStream = logFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+			try
+			{
+				using (StreamReader reader = new StreamReader(new FileStream(logFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+				{
+					long lastMaxOffset = reader.BaseStream.Length;
+					string line = "";
+					while (true &&
+						this.isRunning
+					)
+					{
+						Thread.Sleep(100);
+						if (reader.BaseStream.Length == lastMaxOffset)
+						{
+							continue;
+						}
+						reader.BaseStream.Seek(lastMaxOffset, SeekOrigin.Begin);
+						line = "";
+						while ((line = reader.ReadLine()) != null)
+						{
+							/*Console.WriteLine("LINE " + line);
+							Console.WriteLine(" ");*/
+							try
+							{
+								ProcessJson(line);
+							}
+							catch (Exception err)
+							{
+								Console.WriteLine(err.Message);
+							}							
+						}
+						lastMaxOffset = reader.BaseStream.Position;
+					}
+				}
+			}
+			catch (Exception err)
+			{
 
-            //Create a stream from the file stream.
-            StreamReader streamReader = new StreamReader(fileStream);
-
-            //Go through the stream.
-            while (!streamReader.EndOfStream)
-            {
-                //If this string hasn't been processed yet, process it and mark it as processed.
-                string json = streamReader.ReadLine();
-                if (!processedLogs.Contains(json))
-                {
-                    if (!doNotTrigger) { ProcessJson(json); } //Only process it if it's marked true.
-                    processedLogs.Add(json);
-                }
-            }
+			}			
         }
 
         public void ProcessJson(string json)
