@@ -6,12 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-
 using EliteAPI.Bindings;
-using EliteAPI.Discord;
-using EliteAPI.Status;
-
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EliteAPI
 {
@@ -53,17 +50,17 @@ namespace EliteAPI
         /// <summary>
         /// Holds the ship's current status.
         /// </summary>
-        public ShipStatus Status { get; internal set; }
+        public EliteAPI.Status.ShipStatus Status { get; internal set; }
 
         /// <summary>
         /// Holds the ship's current cargo situation.
         /// </summary>
-        public ShipCargo Cargo { get; internal set; }
+        public EliteAPI.Status.ShipCargo Cargo { get; internal set; }
 
         /// <summary>
         /// Returns all the modules installed on the current ship.
         /// </summary>
-        public ShipModules Modules { get { return ShipModules.FromFile(new FileInfo(JournalDirectory.FullName + "\\ModulesInfo.json"), this); } }	
+        public EliteAPI.Status.ShipModules Modules { get { return EliteAPI.Status.ShipModules.FromFile(new FileInfo(JournalDirectory.FullName + "\\ModulesInfo.json"), this); } }	
 		
 		public JObject MarketData { get { return JObject.Parse(File.ReadAllText(JournalDirectory.GetFiles().Where(x => x.Name == "Market.json").First().FullName)); } }
 		
@@ -89,21 +86,21 @@ namespace EliteAPI
         /// <summary>
         /// Holds information about the commander.
         /// </summary>
-        public CommanderStatus Commander { get; internal set; }
+        public EliteAPI.Status.CommanderStatus Commander { get; internal set; }
 
         /// <summary>
         /// Holds information about the last known location of the commander.
         /// </summary>
-        public LocationStatus Location { get; internal set; }
+        public EliteAPI.Status.LocationStatus Location { get; internal set; }
 
-        internal StatusWatcher StatusWatcher { get; set; }
-        internal CargoWatcher CargoWatcher { get; set; }
+        internal EliteAPI.Status.StatusWatcher StatusWatcher { get; set; }
+        internal EliteAPI.Status.CargoWatcher CargoWatcher { get; set; }
         internal JournalParser JournalParser { get; set; }
 
         /// <summary>
         /// Rich presence service for Discord.
         /// </summary>
-        public RichPresenceClient DiscordRichPresence { get; internal set; }
+        //public Discord.RichPresenceClient DiscordRichPresence { get; internal set; }
 
         /// <summary>
         /// Whether the API should skip the processing of previous events before the API was started.
@@ -139,12 +136,12 @@ namespace EliteAPI
             //Reset services.
             this.Events = new Events.EventHandler();
             this.Logger = new Logging.Logger();
-            this.Commander = new CommanderStatus(this);
-            this.Location = new LocationStatus(this);
-            this.DiscordRichPresence = new RichPresenceClient(this);
-            this.StatusWatcher = new StatusWatcher(this);
-            this.CargoWatcher = new CargoWatcher(this);
-            this.Status = ShipStatus.FromFile(new FileInfo(JournalDirectory + "//Status.json"), this);
+            this.Commander = new EliteAPI.Status.CommanderStatus(this);
+            this.Location = new EliteAPI.Status.LocationStatus(this);
+            //this.DiscordRichPresence = new Discord.RichPresenceClient(this);
+            this.StatusWatcher = new EliteAPI.Status.StatusWatcher(this);
+            this.CargoWatcher = new EliteAPI.Status.CargoWatcher(this);
+            this.Status = EliteAPI.Status.ShipStatus.FromFile(new FileInfo(JournalDirectory + "//Status.json"), this);
             this.JournalParser = new JournalParser(this);
             JournalParser.processedLogs = new List<string>();		
         }
@@ -285,7 +282,7 @@ namespace EliteAPI
             ProcessLog(logFile, !SkipFirstLog);*/
 
 			string currentLog = "";
-            while (isRunning)
+            while (IsRunning)
             {
                 tempLogFile = JournalDirectory
                                     .GetFiles("Journal.*") //Get all files that end with .log.

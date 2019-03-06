@@ -2,12 +2,11 @@
 using System.IO;
 
 using EliteAPI.Bindings;
-using EliteAPI.Discord;
-using EliteAPI.Status;
+//using EliteAPI.Discord;
 
 namespace EliteAPI
 {
-    public interface IEliteDangerousAPI
+	public interface IEliteDangerousAPI
     {
         //Version info.
         string Version { get; }
@@ -16,17 +15,17 @@ namespace EliteAPI
         bool IsRunning { get; }
         DirectoryInfo JournalDirectory { get; }
         bool SkipCatchUp { get; }
-        EliteAPI.Events.EventHandler Events { get; }
-        EliteAPI.Logging.Logger Logger { get; }
-        ShipStatus Status { get; }
-        ShipCargo Cargo { get; }
-        ShipModules Modules { get; }
+        Events.EventHandler Events { get; }
+        Logging.Logger Logger { get; }
+		EliteAPI.Status.ShipStatus Status { get; }
+		EliteAPI.Status.ShipCargo Cargo { get; }
+		EliteAPI.Status.ShipModules Modules { get; }
         UserBindings Bindings { get; }
-        CommanderStatus Commander { get; }
-        LocationStatus Location { get; }
+		EliteAPI.Status.CommanderStatus Commander { get; }
+		EliteAPI.Status.LocationStatus Location { get; }
 
         //Services.
-        RichPresenceClient DiscordRichPresence { get; }
+        //RichPresenceClient DiscordRichPresence { get; }
 
         //Methods.
         void Reset();

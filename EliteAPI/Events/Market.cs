@@ -51,11 +51,11 @@ namespace EliteAPI.Events
 
     public partial class MarketInfo
     {
-        public static MarketInfo Process(string json, EliteDangerousAPI api) => {
+        public static MarketInfo Process(string json, EliteDangerousAPI api)  {
 			MarketInfo market = JsonConvert.DeserializeObject<MarketInfo>(json, EliteAPI.Events.MarketConverter.Settings);
 			market.ScanCommodities(api.MarketData);
-			api.Events.InvokeMarketEvent(market);
-		};
+			return api.Events.InvokeMarketEvent(market);
+		}
     }
 
     public static class MarketSerializer

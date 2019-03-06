@@ -57,7 +57,10 @@ namespace EliteAPI.Status
 
             newStatus.InNoFireZone = InNoFireZone;
             newStatus.JumpRange = JumpRange;
-            newStatus.Fuel.MaxFuel = MaxFuel;
+			if (newStatus.Fuel != null)
+			{
+				newStatus.Fuel.MaxFuel = MaxFuel;
+			}
 
             //Set the new status.
             api.Status = newStatus;

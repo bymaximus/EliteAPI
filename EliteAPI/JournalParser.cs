@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace EliteAPI
@@ -28,7 +28,7 @@ namespace EliteAPI
 					long lastMaxOffset = reader.BaseStream.Length;
 					string line = "";
 					while (true &&
-						this.isRunning
+						EliteAPI.IsRunning
 					)
 					{
 						Thread.Sleep(100);

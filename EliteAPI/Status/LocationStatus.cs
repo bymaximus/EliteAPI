@@ -12,26 +12,24 @@
 				lastSystem.Address = e.SystemAddress;
 				lastSystem.Allegiance = e.SystemAllegiance;
 				lastSystem.Economy = e.SystemEconomy;
-				lastSystem.Economy_Localised = e.SystemEconomy_Localised;
-				lastSystem.FactionState = e.FactionState;
+				lastSystem.Economy_Localised = e.SystemEconomyLocalised;
+				lastSystem.FactionState = "???";
 				lastSystem.Government = e.SystemGovernment;
-				lastSystem.Government_Localised = e.SystemGovernment_Localised;
+				lastSystem.Government_Localised = e.SystemGovernmentLocalised;
 				lastSystem.Name = e.StarSystem;
-				lastSystem.Population = e.Population;
+				lastSystem.Population = (ulong)e.Population;
 				lastSystem.Position = e.StarPos;
 				lastSystem.SecondEconomy = e.SystemSecondEconomy;
-				lastSystem.SecondEconomy_Localised = e.SystemSecondEconomy_Localised;
+				lastSystem.SecondEconomy_Localised = e.SystemSecondEconomyLocalised;
 				lastSystem.Security = e.SystemSecurity;
-				lastSystem.Security_Localised = e.SystemSecurity_Localised;
-				lastSystem.SystemFaction = e.SystemFaction;
+				lastSystem.Security_Localised = e.SystemSecurityLocalised;
+				lastSystem.SystemFaction = e.SystemFaction.Name;
 
-				lastStation.Name = e.StationName;
-				lastStation.Type = e.StationType;
 				lastStation.System = lastSystem;
 
 				lastBody.Name = e.Body;
 				lastBody.Type = e.BodyType;
-				lastBody.ID = e.BodyID;				
+				lastBody.ID = (int)e.BodyId;				
 			};
             api.Events.ApproachBodyEvent += (sender, e) => { 
 				StarSystem = e.StarSystem; 
@@ -39,7 +37,7 @@
 				BodyType = "Planet"; 
 								
 				lastBody.Name = e.Body;
-				lastBody.ID = e.BodyID;
+				lastBody.ID = (int)e.BodyId;
 				lastBody.Type = "Planet";				
 				
 				if (e.StarSystem != "" &&
@@ -57,7 +55,7 @@
 				BodyType = "Planet"; 
 				
 				lastBody.Name = e.Body;
-				lastBody.ID = e.BodyID;
+				lastBody.ID = (int)e.BodyId;
 				lastBody.Type = "Planet";				
 				
 				if (e.StarSystem != "" &&
@@ -76,15 +74,15 @@
 				lastSystem.Address = e.SystemAddress;
 
 				lastStation.Allegiance = e.StationAllegiance;
-				lastStation.DistFromStarLS = e.DistFromStarLS;
+				lastStation.DistFromStarLS = e.DistFromStarLs;
 				lastStation.Economies = e.StationEconomies;
 				lastStation.Economy = e.StationEconomy;
-				lastStation.Economy_Localised = e.StationEconomy_Localised;
-				lastStation.Faction = e.StationFaction;
-				lastStation.FactionState = e.FactionState;
+				lastStation.Economy_Localised = e.StationEconomyLocalised;
+				lastStation.Faction = e.StationFaction.Name;
+				lastStation.FactionState = "??";
 				lastStation.Government = e.StationGovernment;
-				lastStation.Government_Localised = e.StationGovernment_Localised;
-				lastStation.MarketID = e.MarketID;
+				lastStation.Government_Localised = e.StationGovernmentLocalised;
+				lastStation.MarketID = e.MarketId;
 				lastStation.Name = e.StationName;
 				lastStation.Services = e.StationServices;
 				lastStation.System = lastSystem;
@@ -95,21 +93,21 @@
 				
 				lastStation.Name = e.StationName;
 				lastStation.Type = e.StationType;
-				lastStation.MarketID = e.MarketID;				
+				lastStation.MarketID = e.MarketId;				
 			};
             api.Events.FSDJumpEvent += (sender, e) => { 
 				lastSystem.Address = e.SystemAddress;
 				lastSystem.Allegiance = e.SystemAllegiance;
 				lastSystem.Economy = e.SystemEconomy;
-				lastSystem.Economy_Localised = e.SystemEconomy_Localised;
+				lastSystem.Economy_Localised = e.SystemEconomyLocalised;
 				lastSystem.Government = e.SystemGovernment;
-				lastSystem.Government_Localised = e.SystemGovernment_Localised;				
-				lastSystem.Population = e.Population;
+				lastSystem.Government_Localised = e.SystemGovernmentLocalised;				
+				lastSystem.Population = (ulong)e.Population;
 				lastSystem.Position = e.StarPos;
 				lastSystem.SecondEconomy = e.SystemSecondEconomy;
-				lastSystem.SecondEconomy_Localised = e.SystemSecondEconomy_Localised;
+				lastSystem.SecondEconomy_Localised = e.SystemSecondEconomyLocalised;
 				lastSystem.Security = e.SystemSecurity;
-				lastSystem.Security_Localised = e.SystemSecurity_Localised;
+				lastSystem.Security_Localised = e.SystemSecurityLocalised;
 				StarSystem = e.StarSystem;
 			};
 			
@@ -162,7 +160,7 @@
 				Body = e.Body;
 				BodyType = e.BodyType;
 				lastBody.Name = e.Body;
-				lastBody.ID = e.BodyID;
+				lastBody.ID = (int)e.BodyId;
 				lastBody.Type = e.BodyType;
 
 				StarSystem = e.StarSystem;

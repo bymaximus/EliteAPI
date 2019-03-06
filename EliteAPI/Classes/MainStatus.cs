@@ -2,7 +2,7 @@
 
 namespace EliteAPI
 {
-    public class Status
+    public class MainStatus
     {
         public DateTime timestamp { get; }
         public int Flags { get; }
